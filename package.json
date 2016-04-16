@@ -1,0 +1,18 @@
+{
+  "name": "talos2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "elasticsearch": "11.0.1",
+    "express": "4.13.4",
+    "lodash": "4.11.0",
+    "optimist": "0.6.1",
+    "pug": "2.0.0-alpha3"
+  }
+}

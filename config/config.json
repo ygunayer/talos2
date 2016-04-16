@@ -1,0 +1,10 @@
+{
+	"elastic": {
+		"host": "http://localhost:9200",
+		"index": "talos-texts",
+		"type": "text"
+	},
+	"server": {
+		"port": 3000
+	}
+}
