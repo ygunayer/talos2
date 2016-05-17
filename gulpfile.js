@@ -7,6 +7,7 @@ var gulp = require('gulp'),
     stylus = require('gulp-stylus'),
     uglify = require('gulp-uglify'),
     buffer = require('vinyl-buffer'),
+    nodemon = require('gulp-nodemon'),
     browserify = require('browserify'),
     runSequence = require('run-sequence'),
     source = require('vinyl-source-stream'),
@@ -23,30 +24,35 @@ var paths = {
         src: [ './client/scripts/**/*.js' ],
         bundleName: 'bundle.js',
         dest: './public/js/'
+    },
+    server: {
+        entry: './app.js',
+        watch: [ './server' ]
     }
 };
 
 var isDev = false;
 
+/** Clean up previous build */
 gulp.task('clean', function() {
     return del([ './public' ]);
 });
 
+/** Process styles */
 gulp.task('styles', function() {
     return gulp.src(paths.styles.src)
         .pipe(stylus({
             compress: !isDev,
+            'include css': true,
             linenos: false
         }))
         .pipe(gulp.dest(paths.styles.dest));
 });
-gulp.task('watch:styles', [ 'styles' ], function() {
-    gulp.watch(paths.styles.src, [ 'styles' ]);
-});
 
+/** Process client-side scripts */
 gulp.task('scripts', function() {
     var b = browserify({
-        entries: paths.scripts.entries,
+        entries: paths.scripts.entry,
         debug: isDev
     });
 
@@ -65,18 +71,37 @@ gulp.task('scripts', function() {
 
     return ret.pipe(gulp.dest(paths.scripts.dest));
 });
+
+/** Watch for changes in style files and re-run task "styles" on change */
+gulp.task('watch:styles', [ 'styles' ], function() {
+    gulp.watch(paths.styles.src, [ 'styles' ]);
+});
+
+/** Watch for changes in client-side scripts and re-run task "scripts" on change */
 gulp.task('watch:scripts', [ 'scripts' ], function() {
     gulp.watch(paths.scripts.src, [ 'scripts' ]);
 });
 
-gulp.task('default', [ 'development' ]);
-
-gulp.task('development', [ 'clean' ], function(next) {
-    isDev = true;
-    runSequence('watch:styles', 'watch:scripts');
+/** Watch for changes in server scripts and restart server on change */
+gulp.task('watch:server', function() {
+    nodemon({
+        script: paths.server.entry,
+        watch: paths.server.watch,
+        ext: 'js'
+    });
 });
 
-gulp.task('production', function() {
+/** Run in development mode by default */
+gulp.task('default', [ 'dev' ]);
+
+/** Development mode */
+gulp.task('dev', [ 'clean' ], function(next) {
+    isDev = true;
+    runSequence('watch:styles', 'watch:scripts', 'watch:server');
+});
+
+/** Production mode */
+gulp.task('dist', function() {
     isDev = false;
     runSequence('clean', 'styles', 'scripts');
 });

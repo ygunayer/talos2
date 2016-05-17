@@ -2,10 +2,10 @@
 
 var angular = require('angular');
 
-var app = angular.module('talos', []);
+require('./search');
+
+var app = angular.module('talos', [ 'talos.search' ]);
 
 app.controller('MainController', function($scope) {
-    $scope.meme = 'HELLO';
+    
 });
-
-module.exports = app;

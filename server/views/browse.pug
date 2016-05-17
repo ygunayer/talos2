@@ -1,0 +1,16 @@
+extends partials/layout
+
+block content
+  mixin tree-item(label, item)
+    li #{label}
+    if item.item
+      a(href=baseUrl + '/file/' + item.item.key) #{item.item.title}
+    if item.children
+      ul
+        each key in Object.keys(item.children)
+          +tree-item(key, item.children[key])
+
+  .container
+    p asdoasd
+    ul
+      +tree-item('TermDlg.FoundTexts', tree)

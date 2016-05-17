@@ -3,12 +3,11 @@
 var express = require('express');
 var services = require('../services');
 
-var SearchService = services.SearchService;
+var ElasticService = services.ElasticService;
 var router = express.Router();
 
-router.use('/search', function(req, res) {
-    console.log(req.query);
-    SearchService.search(req.query.term, function(err, results) {
+router.get('/search', function(req, res) {
+    ElasticService.search(req.query.term, function(err, results) {
         if (err) {
             console.error('Error searching for term', req.query.term, err);
             res.status(500);
@@ -20,5 +19,11 @@ router.use('/search', function(req, res) {
         res.send(results);
     });
 });
+
+router.use(function(req, res) {
+    res.status(404).json({
+        error: 'Not Found'
+    });
+})
 
 module.exports = router;

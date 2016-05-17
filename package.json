@@ -23,6 +23,7 @@
     "gulp": "3.9.1",
     "gulp-if": "2.0.0",
     "gulp-ng-annotate": "2.0.0",
+    "gulp-nodemon": "2.0.6",
     "gulp-sourcemaps": "1.6.0",
     "gulp-stylus": "2.3.1",
     "gulp-uglify": "1.5.3",
@@ -30,8 +31,5 @@
     "run-sequence": "1.1.5",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0"
-  },
-  "browser": {
-    "angular": "./node_modules/angular/angular.js"
   }
 }

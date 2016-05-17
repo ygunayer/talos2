@@ -1,8 +1,19 @@
 doctype html5
-html
+html(ng-app='talos')
   head
-    title #{title}
-  body
+    title #{(title ? title + ' | ' : '')}The Talos Compendium
+    link(rel='stylesheet', href=baseUrl + '/public/css/main.css')
+  body(ng-controller='MainController')
+    header#header-main
+      nav.navbar-default
+        .container
+          .navbar-header
+            a.navbar-brand(href='/') The Talos Compendium
+          ul.nav.navbar-nav.navbar-right
+            each item in navItems
+              li(class=activeNav == item.slug ? 'active' : '')
+                a(href=item.href) #{item.label}
+  
     block content
 
     script(src=baseUrl + '/public/js/bundle.js')
