@@ -7,10 +7,9 @@ block content
       a(href=baseUrl + '/file/' + item.item.key) #{item.item.title}
     if item.children
       ul
-        each key in Object.keys(item.children)
+        each key in Object.keys(item.children).sort()
           +tree-item(key, item.children[key])
 
   .container
-    p asdoasd
     ul
       +tree-item('TermDlg.FoundTexts', tree)

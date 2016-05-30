@@ -12,17 +12,42 @@ var ElasticService = function() {
     
 };
 
+ElasticService.prototype.formatResultSet = function(result) {
+    var hits = (result && result.hits && result.hits.hits) || [];
+    return hits.map(this.formatSingle);
+};
+
+ElasticService.prototype.formatSingle = function(data) {
+    var item = _.pick(data._source, [ 'title', 'key', 'input', 'output', 'segments' ]);
+    var segments = item.segments.reduce(function(acc, segment) {
+        acc.encoded.push(segment.text || '<span class="highlight warning" title="' + segment.decodedText + '">' + segment.encodedText + '</span>');
+        acc.decoded.push(segment.text || '<span class="highlight success" title="' + segment.encodedText + '">' + segment.decodedText + '</span>');
+        return acc;
+    }, { encoded: [], decoded: [] });
+
+    if (data.highlight) {
+        item.highlights = data.highlight;
+    }
+
+    return _.extend(item, {
+        encoded: segments.encoded.join(' '),
+        decoded: segments.decoded.join(' ')
+    });
+};
+
 ElasticService.prototype.get = function(id, callback) {
+    var that = this;
     client.get({
         index: config.indexName,
-        type: config,
+        type: config.documentType,
         id: id
     }).then(function(result) {
-        callback(null, result);
+        callback(null, that.formatSingle(result));
     }).catch(callback);
 };
 
 ElasticService.prototype.search = function(term, callback) {
+    var that = this;
     client.search({
         index: config.indexName,
         type: config.documentType,
@@ -37,8 +62,8 @@ ElasticService.prototype.search = function(term, callback) {
                 }
             },
             highlight: {
-                pre_tags: [ '<em class="highlight">' ],
-                post_tags: [ '</em>' ],
+                pre_tags: [ '<mark>' ],
+                post_tags: [ '</mark>' ],
                 fields: {
                     title: {},
                     input: {},
@@ -47,19 +72,18 @@ ElasticService.prototype.search = function(term, callback) {
             }
         }
     }).then(function(result) {
-        callback(null, result);
+        callback(null, that.formatResultSet(result));
     }).catch(callback);
 };
 
 ElasticService.prototype.findAll = function(callback) {
+    var that = this;
     client.search({
         index: config.indexName,
         type: config.documentType,
         size: 300
     }).then(function(result) {
-        var hits = (result.hits && result.hits.hits) || [];
-        hits = hits.map(hit => _.pick(hit._source, [ 'title', 'key', 'input', 'output', 'segments' ]));
-        callback(null, hits);
+        callback(null, that.formatResultSet(result));
     }).catch(callback);
 };
 

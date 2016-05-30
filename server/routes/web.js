@@ -12,10 +12,17 @@ router.get('/about', function(req, res) {
     res.render('about');
 });
 
-router.get('/file/:key', function(req, res) {
-    res.locals.activeNav = 'about';
-    res.locals.title = 'About';
-    res.render('about');
+router.get('/file/:key', function(req, res, next) {
+    services.ElasticService.get(req.params.key, function(err, file) {
+        if (err) {
+            return next(err);
+        }
+
+        res.locals.activeNav = 'browse';
+        res.locals.title = file.title;
+        res.locals.file = file;
+        res.render('file');
+    });
 });
 
 router.get('/browse', function(req, res, next) {
@@ -37,7 +44,7 @@ router.get('/', function(req, res) {
 });
 
 router.use(function(err, req, res, next) {
-    console.error('ERROR:', req.method, req.url, err.message, err.stack);
+    console.error(req.method, req.url, err.message, err.stack);
     var status = (err && err.status) || 500;
     res.status(status).send({
         error: (err && err.message) || 'Unknown error',
