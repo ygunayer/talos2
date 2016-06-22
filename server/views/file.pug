@@ -1,0 +1,25 @@
+extends partials/layout
+
+block content
+  .container
+    .panel.panel-default
+      .panel-heading.clearfix
+        .pull-right
+          .btn-group
+            .btn.btn-default.btn-xs(ng-model='displayMode', btn-radio="'encoded'", title='Show Encoded Text Only')
+              i.fa.fa-eye-slash
+              span Original
+            .btn.btn-default.btn-xs(ng-model='displayMode', btn-radio="'decoded'", title='Show Decoded Text Only')
+              i.fa.fa-eye
+              span Decoded
+            .btn.btn-default.btn-xs(ng-model='displayMode', btn-radio="'both'", title='Show Both in Split View')
+              i.fa.fa-columns
+              span Both
+        h2.panel-title #{file.title}
+
+      .panel-body
+        .row.flatline
+          .col-md-6
+            .well.well-sm !{file.encoded}
+          .col-md-6
+            .well.well-sm !{file.decoded}

@@ -1,8 +1,35 @@
 doctype html5
-html
+html(ng-app='talos')
   head
-    title #{title}
-  body
+    title #{(title ? title + ' | ' : '')}The Talos Compendium
+    link(rel='stylesheet', href=baseUrl + '/public/css/main.css')
+  body(ng-controller='MainController')
+    header#header-main
+      nav.navbar-default
+        .container
+          .navbar-header
+            a.navbar-brand(href='/') The Talos Compendium
+          ul.nav.navbar-nav.navbar-right
+            each item in navItems
+              li(class=activeNav == item.slug ? 'active' : '')
+                a(href=item.href) #{item.label}
+  
     block content
 
     script(src=baseUrl + '/public/js/bundle.js')
+
+    script(type='text/ng-template', id='widgets/search-form.html')
+      .form-group
+        input(type='text', class='form-input', ng-model='term', placeholder='Enter a term')
+        div.results-pane(ng-show='showResultsPane')
+          div(ng-if='isLoading') Searching...
+          div(ng-if='results')
+            p(ng-if='results.length < 1') No results were found.
+            ul.result-list.list-group.ng-hide(ng-show='results.length > 0')
+              li.result-item.list-group-item(ng-repeat='item in results track by $index')
+                h4.list-group-item-heading
+                  a(href='{{ item.url }}') {{ item.title }}
+                .list-group-item-text(ng-if='item.highlightedText.input || item.highlightedText.output')
+                  .row
+                    div(ng-class="item.highlightedText.output ? 'col-md-6' : 'col-md-12'", ng-bind-html='item.highlightedText.input | unsafe')
+                    div(ng-class="item.highlightedText.input ? 'col-md-6' : 'col-md-12'", ng-bind-html='item.highlightedText.output | unsafe')
