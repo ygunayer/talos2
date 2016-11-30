@@ -7,7 +7,7 @@ var ElasticService = services.ElasticService;
 var router = express.Router();
 
 router.get('/search', function(req, res) {
-    ElasticService.search(req.query.term, function(err, results) {
+    ElasticService.search(req.query.term, req.query.page, req.query.pageSize, function(err, results) {
         if (err) {
             console.error('Error searching for term', req.query.term, err);
             res.status(500);

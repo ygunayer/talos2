@@ -1,7 +1,7 @@
 {
   "elastic": {
     "host": "http://localhost:9200",
-    "indexName": "talos-texts",
+    "indexName": "talos",
     "documentType": "text"
   },
   "server": {
