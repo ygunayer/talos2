@@ -1,15 +1,31 @@
 extends partials/layout
 
 block content
-  mixin tree-item(label, item)
-    li #{label}
-    if item.item
-      a(href=baseUrl + '/file/' + item.item.key) #{item.item.title}
-    if item.children
-      ul
-        each key in Object.keys(item.children).sort()
-          +tree-item(key, item.children[key])
-
   .container
-    ul
-      +tree-item('TermDlg.FoundTexts', tree)
+    h1 Browse
+    p Below is a list of all texts found in the game. If you're not a fan of searching or you're just looking to browse then this page is for you.
+    mixin tree-item(label, item)
+      li #{label}
+      if item.item
+        a(href=baseUrl + '/file/' + item.item.key) #{item.item.title}
+      if item.children
+        ul
+          each key in Object.keys(item.children).sort()
+            +tree-item(key, item.children[key])
+
+    .container
+      - var keys = Object.keys(tree).sort();
+      each key in keys
+        .panel.panel-default
+          .panel-heading
+            h4(title='TermDlg.FoundTexts.' + key) #{key}
+          table.table.table-bordered.table-striped.table-condensed
+            tbody
+              each item in tree[key]
+                - var url = '/file/' + item.key
+                tr
+                  td.col-md-6
+                    spam(title=item.key) #{item.selfKey}
+                  td.col-md-6
+                    a(href=url, title=item.key) #{item.title}
+      //+tree-item('TermDlg.FoundTexts', tree)

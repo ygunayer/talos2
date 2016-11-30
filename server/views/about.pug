@@ -1,4 +1,25 @@
 extends partials/layout
 
 block content
-  p About
+  .container
+    h1 About
+    p This website is a collection of in-game texts from 
+      a(href='http://www.croteam.com/talosprinciple/', target='_blank') The Talos Principle
+      | , a philosophical post-apocalyptic first-person puzzle game where the setting is laid out through pieces of texts found in computer terminals scattered around the world.
+
+    h2 Why
+    p Story-wise, some of these texts are corrupted and therefore partly destroyed. Technically, these parts are (mostly) meaningful texts represented in hexadecimal format, so it's possible to revert them to their original state by decoding them.
+    p Unfortunately, the game does not provide a way to highlight, select or copy these texts, so curious players have to open up a browser and type in the hex code to a hex-to-string website manually. I made this website in an effort to overcome this cumbersome process.
+    p Simply type in the displayed name or title of the file, or a part of its content (encoded or otherwise), and you'll be presented with a side-by-side view of both the original (encoded, or "corrupt") and the decoded versions of the said texts.
+
+    h2 How
+    p I created a command line tool to retrieve the texts from the game's own assets, try its best to find those "corrupted" parts, decode them, and store both versions on an Elasticsearch index so that they're easily searchable. Then, I made this website to serve as an introductory tool, a catalog, and a search engine.
+    p The command line tool is written in Java 8 and the website is written in Node.js and AngularJS. Both projects are open-source and the sources are served on Github.
+    ul
+      li
+        a(href='https://github.com/ygunayer/talos-decoder') talos-decoder
+        | &nbsp;- the command line tool
+
+      li
+        a(href='https://github.com/ygunayer/talos2') talos2
+        | &nbsp;- this website

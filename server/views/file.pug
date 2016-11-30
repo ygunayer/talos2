@@ -1,25 +1,23 @@
 extends partials/layout
 
 block content
-  .container
+  .container(ng-controller='FileDetailController')
     .panel.panel-default
       .panel-heading.clearfix
         .pull-right
           .btn-group
-            .btn.btn-default.btn-xs(ng-model='displayMode', btn-radio="'encoded'", title='Show Encoded Text Only')
+            .btn.btn-default.btn-xs(title='Show Encoded Text', ng-click="toggleDisplay('encoded')", ng-class="{ 'active': show.encoded }")
               i.fa.fa-eye-slash
-              span Original
-            .btn.btn-default.btn-xs(ng-model='displayMode', btn-radio="'decoded'", title='Show Decoded Text Only')
+              span Show Original
+            .btn.btn-default.btn-xs(title='Show Decoded Text', ng-click="toggleDisplay('decoded')", ng-class="{ 'active': show.decoded }")
               i.fa.fa-eye
-              span Decoded
-            .btn.btn-default.btn-xs(ng-model='displayMode', btn-radio="'both'", title='Show Both in Split View')
-              i.fa.fa-columns
-              span Both
-        h2.panel-title #{file.title}
+              span Show Decoded
+        h1.panel-title
+          span(title=file.key) #{file.title}
 
       .panel-body
         .row.flatline
-          .col-md-6
+          div(ng-class="show.decoded ? 'col-md-6' : 'col-md-12'", ng-if="show.encoded")
             .well.well-sm !{file.encoded}
-          .col-md-6
+          div(ng-class="show.encoded ? 'col-md-6' : 'col-md-12'", ng-if="show.decoded")
             .well.well-sm !{file.decoded}
