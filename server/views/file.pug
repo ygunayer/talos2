@@ -1,23 +1,23 @@
 extends partials/layout
 
 block content
-  .container(ng-controller='FileDetailController')
+  .container.pt-md(ng-controller='FileDetailController')
     .panel.panel-default
       .panel-heading.clearfix
         .pull-right
           .btn-group
-            .btn.btn-default.btn-xs(title='Show Encoded Text', ng-click="toggleDisplay('encoded')", ng-class="{ 'active': show.encoded }")
-              i.fa.fa-eye-slash
+            .btn.btn-default.btn-xs(title='Show Both', ng-click="displayMode = 'both'", ng-class="{ 'active': displayMode == 'both' }")
               span Show Original
-            .btn.btn-default.btn-xs(title='Show Decoded Text', ng-click="toggleDisplay('decoded')", ng-class="{ 'active': show.decoded }")
-              i.fa.fa-eye
+            .btn.btn-default.btn-xs(title='Show Encoded Text', ng-click="displayMode = 'encoded'", ng-class="{ 'active': displayMode == 'encoded' }")
+              span Show Original
+            .btn.btn-default.btn-xs(title='Show Decoded Text', ng-click="displayMode = 'decoded'", ng-class="{ 'active': displayMode == 'decoded' }")
               span Show Decoded
         h1.panel-title
           span(title=file.key) #{file.title}
 
       .panel-body
         .row.flatline
-          div(ng-class="show.decoded ? 'col-md-6' : 'col-md-12'", ng-if="show.encoded")
+          div(ng-class="displayMode == 'both' ? 'col-md-6' : 'col-md-12'", ng-if="displayMode == 'both' || displayMode == 'encoded'")
             .well.well-sm !{file.encoded}
-          div(ng-class="show.encoded ? 'col-md-6' : 'col-md-12'", ng-if="show.decoded")
+          div(ng-class="displayMode == 'both' ? 'col-md-6' : 'col-md-12'", ng-if="displayMode == 'both' || displayMode == 'decoded'")
             .well.well-sm !{file.decoded}

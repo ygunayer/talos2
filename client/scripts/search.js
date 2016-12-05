@@ -37,7 +37,7 @@ search.controller('SearchController', function($scope, SearchService) {
     };
 
     var formatHighlight = function(input) {
-        return !input ? null : cleanupPatterns.reduce(function(acc, pattern) {
+        return !input ? '' : cleanupPatterns.reduce(function(acc, pattern) {
             return acc.replace(pattern, '');
         }, input);
     };
@@ -46,9 +46,9 @@ search.controller('SearchController', function($scope, SearchService) {
         item.url = '/file/' + item.key;
 
         var highlights = item.highlights || {};
-        item.highlightedText = [ 'input', 'output' ].reduce(function(acc, key) {
-            var highlight = highlights[key] || [ utils.ellipsis(item[key], 100) ];
-            acc[key] = highlight.map(formatHighlight).join('<p>...</p>');
+
+        item.highlights = Object.keys(highlights).reduce(function(acc, key) {
+            acc[key] = highlights[key].map(formatHighlight);
             return acc;
         }, {});
 
@@ -76,17 +76,6 @@ search.controller('SearchController', function($scope, SearchService) {
         $scope.showResultsPane = false;
         $scope.results = null;
     };
-});
-
-search.directive('searchForm', function() {
-    return {
-        restrict: 'E',
-        controller: 'SearchController',
-        templateUrl: 'widgets/search-form.html',
-        scope: {
-            initial: '@'
-        }
-    }
 });
 
 module.exports = search;
