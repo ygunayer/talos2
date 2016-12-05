@@ -8,7 +8,7 @@ app.set('view engine', 'pug');
 app.set('views', './server/views');
 
 app.locals.navItems = [
-    { href: '/', title: 'Home', label: 'Home', slug: 'home' },
+    { href: '/', title: 'Search', label: 'Search', slug: 'search' },
     { href: '/browse', title: 'Browse', label: 'Browse', slug: 'browse' },
     { href: '/about', title: 'About', label: 'About', slug: 'about' }
 ];

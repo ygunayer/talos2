@@ -16,3 +16,21 @@ $brand-danger = #e74c3c
   &.info
     color #fff
     background-color $brand-info
+
+[ng-cloak]
+  display none
+
+.result-item
+  blockquote
+    font-size 14px
+    margin 0
+    
+    & + blockquote
+      margin-top 10px
+  
+  mark
+    background-color lighten($brand-warning, 60%)
+    padding 2px
+
+.pt-md
+  margin-top 21px
