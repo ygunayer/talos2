@@ -1,6 +1,8 @@
 # The Talos Compendium
 This is the codebase for the website [The Talos Compendium](http://taloscomp.org), a collection and search engine for in-game texts from [The Talos Principle](http://www.croteam.com/talosprinciple/). The game is a philosophical puzzle game and is set on a post-apocalyptic background where the story is conveyed through pieces of texts found in computer terminals scattered around the world.
 
+![http://i.imgur.com/FMMJJQj.png](http://i.imgur.com/FMMJJQj.png "Screenshot")
+
 ## Why
 Story-wise, some of these texts are corrupted and therefore partly destroyed. Technically, these parts are (mostly) meaningful texts represented in hexadecimal format, so it's possible to revert them to their original state by decoding them.
 
