@@ -19,7 +19,7 @@ app.use(function(req, res, next) {
 });
 
 var routes = require('./server/routes');
-app.use('/public', express.static('public'));
+app.use(express.static('public'));
 app.use('/', routes);
 
 app.use(function(req, res, next) {
