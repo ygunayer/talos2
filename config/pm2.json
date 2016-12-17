@@ -1,0 +1,13 @@
+{
+    "apps": [
+        {
+            "name": "talos2",
+            "script": "../app.js",
+            "instances": 4,
+            "max_memory_restart": "1G",
+            "env": {
+                "NODE_ENV": "production"
+            }
+        }
+    ]
+}
