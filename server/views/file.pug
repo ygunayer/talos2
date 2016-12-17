@@ -6,11 +6,11 @@ block content
       .panel-heading.clearfix
         .pull-right
           .btn-group
-            .btn.btn-default.btn-xs(title='Show Both', ng-click="displayMode = 'both'", ng-class="{ 'active': displayMode == 'both' }")
+            .btn.btn-default.btn-xs(title='Show Both', ng-click="displayMode = 'both'", ng-class="{ 'active': displayMode == 'both' }", analytics-on, analytics-category="display-mode", analytics-event="switch", analytics-label="both")
               span Show Both
-            .btn.btn-default.btn-xs(title='Show Encoded Text', ng-click="displayMode = 'encoded'", ng-class="{ 'active': displayMode == 'encoded' }")
+            .btn.btn-default.btn-xs(title='Show Encoded Text', ng-click="displayMode = 'encoded'", ng-class="{ 'active': displayMode == 'encoded' }", analytics-on, analytics-category="display-mode", analytics-event="switch", analytics-label="encoded")
               span Show Original
-            .btn.btn-default.btn-xs(title='Show Decoded Text', ng-click="displayMode = 'decoded'", ng-class="{ 'active': displayMode == 'decoded' }")
+            .btn.btn-default.btn-xs(title='Show Decoded Text', ng-click="displayMode = 'decoded'", ng-class="{ 'active': displayMode == 'decoded' }", analytics-on, analytics-category="display-mode", analytics-event="switch", analytics-label="decoded")
               span Show Decoded
         h1.panel-title
           span(title=file.key) #{file.title}

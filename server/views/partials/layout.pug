@@ -1,8 +1,9 @@
-doctype html5
+doctype html
 html(ng-app='talos')
   head
     title #{(title ? title + ' | ' : '')}The Talos Compendium
     meta(name='description', content='The Talos Compendium, a search engine for both encoded and decoded versions of texts from The Talos Principle.')
+    meta(name='google-site-verification', content='tRc5L7Wm3yQzrnT32KgBtHYflo_LWCh9He5wOOg8Q0E')
     link(rel='stylesheet', href='/public/css/main.css')
   body(ng-controller='MainController')
     header#header-main
@@ -18,3 +19,10 @@ html(ng-app='talos')
     block content
 
     script(src='/public/js/bundle.js')
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-89126558-1', 'auto');

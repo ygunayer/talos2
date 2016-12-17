@@ -4,7 +4,7 @@ block content
   .container.pt-md
     .form-group(ng-controller='SearchController')
       p Interested in texts from The Talos Principle? Search below:
-      input(type='text', class='form-control', ng-model='term', placeholder='Enter a filename, title, term or phrase')
+      input(type='text', class='form-control', ng-model='term', placeholder='Enter a filename, title, term or phrase', autofocus)
         
       div.results-pane(ng-show='showResultsPane', ng-cloak)
         div(ng-if='isLoading') Searching...
@@ -16,7 +16,7 @@ block content
             li.result-item.list-group-item(ng-repeat='item in results track by $index')
               h4.list-group-item-heading.clearfix
                 em.small.pull-right {{:: item.key }}
-                a(href='{{:: item.url }}') {{:: item.title }}
+                a(href='{{:: item.url }}', analytics-on, analytics-event="search-result-click", analytics-category="search", analytics-label=item.key) {{:: item.title }}
 
               .list-group-item-text.result-details(ng-if='item.highlights.input || item.highlights.output')
                 .row

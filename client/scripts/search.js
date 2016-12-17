@@ -17,7 +17,7 @@ search.service('SearchService', function($http) {
     };
 });
 
-search.controller('SearchController', function($scope, SearchService) {
+search.controller('SearchController', function($scope, $analytics, SearchService) {
     $scope.term = $scope.initial || '';
     $scope.isLoading = false;
 
@@ -63,6 +63,12 @@ search.controller('SearchController', function($scope, SearchService) {
         $scope.results = null;
 
         startLoading();
+
+        // track search event
+        $analytics.eventTrack('search', {
+            category: 'search',
+            label: term
+        });
 
         SearchService.search(term).then(function(response) {
             $scope.results = (response.data || []).map(formatSingle);
