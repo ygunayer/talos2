@@ -3,7 +3,7 @@ html(ng-app='talos')
   head
     title #{(title ? title + ' | ' : '')}The Talos Compendium
     meta(name='description', content='The Talos Compendium, a search engine for both encoded and decoded versions of texts from The Talos Principle.')
-    link(rel='stylesheet', href=baseUrl + '/public/css/main.css')
+    link(rel='stylesheet', href='/public/css/main.css')
   body(ng-controller='MainController')
     header#header-main
       nav.navbar-default
@@ -17,4 +17,4 @@ html(ng-app='talos')
   
     block content
 
-    script(src=baseUrl + '/public/js/bundle.js')
+    script(src='/public/js/bundle.js')
