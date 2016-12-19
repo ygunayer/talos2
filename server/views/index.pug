@@ -16,7 +16,7 @@ block content
             li.result-item.list-group-item(ng-repeat='item in results track by $index')
               h4.list-group-item-heading.clearfix
                 em.small.pull-right {{:: item.key }}
-                a(href='{{:: item.url }}', analytics-on, analytics-event="search-result-click", analytics-category="search", analytics-label=item.key) {{:: item.title }}
+                a(href='{{:: item.url }}', analytics-on, analytics-event="search-result-click", analytics-category="search", analytics-label="{{ item.key }}") {{:: item.title }}
 
               .list-group-item-text.result-details(ng-if='item.highlights.input || item.highlights.output')
                 .row
